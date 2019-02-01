@@ -12,7 +12,7 @@ FONT="ter-120n"
 alias ls="ls -Alhb --color=auto"
 
 function cs() {
-	cd "$@" && ls
+    cd "$@" && ls
 }
 
 function bigfiles() {

@@ -9,9 +9,6 @@ stty erase '^?'
 PS1='[\[\e[1;91m\]\u@\h\[\e[0m\]: \W] \$ '
 FONT="ter-120n"
 
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/bin/sublime_text_3:$PATH"
-
 alias ls="ls -Alhb --color=auto"
 
 function cs() {

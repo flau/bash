@@ -44,3 +44,18 @@ function fgq() {
 
     return $?
 }
+
+function up() {
+    if [ "$#" -gt 1 ] || ([ "$#" -gt 0 ] && [[ $1 =~ '^[0-9]+$' ]]); then
+        echo "Usage: up <count>"
+        return 1
+    fi
+
+    if [ "$#" -eq 0 ] || [ "$1" -ne 0 ]; then
+        cd $(printf "%0.0s../" $(seq 1 $1))
+    fi
+}
+
+function upd() {
+    cd $(pwd | sed -r "s|(.*/$1[^/]*/).*|\1|")
+}

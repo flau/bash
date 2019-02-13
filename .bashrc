@@ -16,8 +16,19 @@ function cs() {
     cd "$@" && ls
 }
 
-function bigfiles() {
-    du -Sh $1 | sort -rh | tail -n +2 | head -10
+# List largest files in directory
+function big() {
+    if [ "$#" -gt 1 ] || ([ "$#" -eq 1 ] && ! [ -d "$1" ]); then
+        >&2 echo "Usage: big <command> <args>"
+        return 1
+    fi
+
+    echo "Directories and files"
+    du -Sh $1 | sort -rh | tail -n +2 | head -5
+
+    echo
+    echo "Files"
+    find $1 -type f -printf '%s %p\n' | sort -rn | head -5
 }
 
 # Run command in foreground and redirect output to /dev/null

@@ -11,6 +11,7 @@ FONT="ter-120n"
 
 alias ls="ls -Alhb --color=auto"
 
+# cd and ls in new directory
 function cs() {
     cd "$@" && ls
 }
@@ -19,69 +20,7 @@ function bigfiles() {
     du -Sh $1 | sort -rh | tail -n +2 | head -10
 }
 
-function bgq() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: bgq <command> <args>"
-        return 1
-    fi
-
-    CMD="$@ > /dev/null 2>&1 &"
-    echo "$CMD"
-    eval "$CMD"
-
-    return $?
-}
-
-function fgq() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: fgq <command> <args>"
-        return 1
-    fi
-
-    CMD="$@ > /dev/null 2>&1"
-    echo "$CMD"
-    eval "$CMD"
-
-    return $?
-}
-
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-fi
-
-stty werase ^H
-stty erase '^?'
-
-# Prompt
-PS1='[\[\e[1;91m\]\u@\h\[\e[0m\]: \W] \$ '
-FONT="ter-120n"
-
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/bin/sublime_text_3:$PATH"
-
-alias ls="ls -Alhb --color=auto"
-
-function cs() {
-    cd "$@" && ls
-}
-
-function bigfiles() {
-    du -Sh $1 | sort -rh | tail -n +2 | head -10
-}
-
-function bgq() {
-    if [ "$#" -lt 1 ]; then
-        >&2 echo "Usage: bgq <command> <args>"
-        return 1
-    fi
-
-    CMD="$@ > /dev/null 2>&1 &"
-    echo "$CMD"
-    eval "$CMD"
-
-    return $?
-}
-
+# Run command in foreground and redirect output to /dev/null
 function fgq() {
     if [ "$#" -lt 1 ]; then
         >&2 echo "Usage: fgq <command> <args>"
@@ -96,6 +35,21 @@ function fgq() {
     return $?
 }
 
+# Run command in background and redirect output to /dev/null
+function bgq() {
+    if [ "$#" -lt 1 ]; then
+        >&2 echo "Usage: bgq <command> <args>"
+        return 1
+    fi
+
+    CMD="$@ > /dev/null 2>&1 &"
+    echo "$CMD"
+    eval "$CMD"
+
+    return $?
+}
+
+# cd up n directories
 function up() {
     if [ "$#" -gt 1 ] || ([ "$#" -gt 0 ] && [[ $1 =~ '^[0-9]+$' ]]); then
         >&2 echo "Usage: up <count>"
@@ -107,6 +61,7 @@ function up() {
     fi
 }
 
+# cd up to a directory starting with name
 function upd() {
     if [ "$#" -gt 1 ]; then
         >&2 echo "Usage: upd <directory>"
